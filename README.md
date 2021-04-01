@@ -7,7 +7,7 @@
 
 ## General info
 Senior school project that was created as a website to allow users to create accounts and budget monthly financial information. Actions include inputting, deleting and updating
-monthly income and expense sources and also viewing this information in a table.
+monthly income and expense sources as well as viewing saved financial information in a table.
 (Some files are sadly missing, as I am not able to retrieve them)
 	
 ## Technologies
