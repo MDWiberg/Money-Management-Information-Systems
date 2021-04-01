@@ -1,0 +1,216 @@
+
+<!--
+        File name: ProfileLogin.html
+        CS489 Research Project
+        Author: Matt Wiberg
+        Goal: Create a profile login page for a financial management webpage.
+-->
+
+<?php   session_start();
+
+        $pass = $_SESSION['pass'];
+        $_SESSION['psw'] = $pass;
+        if($pass != "password")
+                print "Incorrect. <P> Try Again.";
+        else
+        {
+?>
+
+
+<HTML>
+	<CENTER>
+		<H2>
+			<font color=black size=7>
+			Profile Login
+			</font>
+		</H2>
+
+	<HR>
+
+		<FORM action=ProfileHomepage.php method=post>
+			Username:
+			<INPUT type=password name=user>
+				<P>
+			Password:
+			<INPUT type=password name=pass>
+				<P>
+
+
+				<P>
+			<INPUT type=submit value=Submit>
+			<INPUT type=reset value=Reset>
+
+		</FORM>
+
+			<BUTTON>
+			<A HREF=NewUser.html> New User </A>
+			</BUTTON>
+
+			<BUTTON>
+			<A HREF=CS489index.php> Back </A>
+			</BUTTON>
+
+
+	</CENTER>
+</HTML>
+
+<?php
+        }
+?>
+
+
+-------------------------------------------------------------------------------
+
+<!--
+        File name: NewUser.html
+        CS489 Research Project
+
+-->
+
+<HTML>
+	<CENTER>
+		<H2>
+			<font color=black size=7>
+			Profile Login
+			</font>
+		</H2>
+
+	<HR>
+
+		<FORM action=NewUser.php method=post>
+			Username:
+			<INPUT type=text name=user >
+			<P>
+			Password:
+			<INPUT type=text name=pass>
+			<P>
+
+			<HR>
+			<P>
+			<INPUT type=submit value=Submit>
+			<INPUT type=reset value=Reset>
+
+		</FORM>
+
+
+
+	</CENTER>
+</HTML>
+-------------------------------------------------------------------------------
+
+<!--
+        File name: NewUser.php
+        CS489 Research Project
+
+-->
+
+<?php
+        $uInfo = $_POST['user'];
+        $pInfo = $_POST['pass'];
+
+
+
+        $host = 'localhost';
+        $user = 'mdwiberg';
+        $passwd = 'cs480';
+        $database = 'mdwiberg';
+        $connect = mysql_connect($host, $user, $passwd);
+        $query = "insert into PROFILE (USERNAME,PASSWORD) values
+                        ('$uInfo', '$pInfo')";
+       		//print "The query is <i> $query </i> ";
+        mysql_select_db($database);
+		if(mysql_query($query, $connect))
+			print "<CENTER><P>Profile successfully created.<P></CENTER><HR>";
+		else
+			print "<CENTER><P>Could not successfully created profile.<P></CENTER><HR>";
+        mysql_close($connect);
+
+?>
+
+<HTML>
+
+	<CENTER>
+			<BUTTON>
+			<A HREF=ProfileLogin.html> Back to Login </A>
+			</BUTTON>
+	</CENTER>
+</HTML>
+
+
+-------------------------------------------------------------------------------
+<!DOCTYPE html>
+<!--
+        File name: ProfileHomepage.php
+        CS489 Research Project
+-->
+-
+
+<?php   session_start();
+
+	$user = $_POST['uName'];
+    $pass = $_POST['pWord'];
+
+    $connect = mysql_connect("localhost","mdwiberg","cs480");
+	if (!$connect)
+		{
+		die('Failure to connect: ' . mysql_error());
+		}
+	mysql_select_db("mdwiberg", $connect);
+
+	$userN = "SELECT USERNAME from PROFILE WHERE USERNAME='$user' and WHERE PASSWORD='$pass'";
+	$passW = "SELECT PASSWORD from PROFILE WHERE USERNAME='$user' and WHERE PASSWORD='$pass'";
+
+	$resultU = mysql_query($userN);
+	$resultP = mysql_query($passW);
+
+	mysql_close($connect);
+
+?>
+
+<!--
+
+	//$_SESSION['passW'] = $pass;
+	//$_SESSION['userN'] = $user;
+-->
+
+<?php
+
+	if($user != $resultU || $pass = $resultP)
+    	print "An account does not exist with this information. <HR><P> Please try logging in again";
+    else
+        {
+?>
+
+
+<HTML>
+<HEAD>
+	<center>
+	<title>
+	Money Management
+	</title>
+	</center>
+</HEAD>
+<BODY
+	<center>
+	<h2> Money Management Infrmation Systems <h2>
+	</center>
+
+
+	Account Info
+	<BUTTON>
+		<A HREF=uAccount.php> Update Information </A>
+	</BUTTON>
+
+	<BUTTON>
+			<A HREF=display___.php> View Information </A>
+	</BUTTON>
+
+</BODY>
+</HTML>
+
+<?php
+	}
+?>
+
+-------------------------------------------------------------------------------
+

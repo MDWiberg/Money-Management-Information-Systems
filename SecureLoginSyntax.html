@@ -1,0 +1,17 @@
+<?php   session_start(); ?>
+
+<?php
+        if($_SESSION['psw'] == NULL)
+        {
+                $pass = $_POST['project'];
+                $_SESSION['psw'] = $pass;
+        }
+        else
+        {
+                $pass = $_SESSION['psw'];
+        }
+        if($pass != "project")
+                print "Incorrect Passcode: Try again.";
+        else
+        {
+?>
